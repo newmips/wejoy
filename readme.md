@@ -54,7 +54,24 @@ If the module uinput is not loaded on your system, you need to manually load it:
 # LUA scripting ----
 * Please read the example.lua and warthog_throttle.lua to learn how to customize your script.
 * Also read the keycodes_ref.txt for keyboard reference. These variables are globally accessable in your LUA script.
+* To control BlueROV2 with QGroundControl use bluerov2.lua
 
+Make sure you have configured program to run with th keyboard of your laptop / PC
+1. Retrieve keyboard device ID with command:
+> xinput
+
+2. Change value if needed in "bluerov2.lua" file
+...
+kbd0 = "/dev/input/event3"
+...
+
+2. Compile source code to (re)generate "wejoy" binary:
+> sudo sh make.sh
+
+3. Execute command:
+> sudo ./wejoy bluerov2.lua
+
+Your keyboard is now set to emulate a virtual joystick. This one is recognized by QGroundControl.
 
 # KNOWN BUGS ----
 * Every axis and button is not tested to work fully.
