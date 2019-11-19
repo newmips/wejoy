@@ -10,7 +10,7 @@
 devices = 
    {
 
-      kbd0 = "/dev/input/event3"  -- keyboard device (try to find a suitable device by listing input devices by typing 'ls /dev/input/by-id/' )
+      kbd0 = "/dev/input/event18"  -- keyboard device (try to find a suitable device by listing input devices by typing 'ls /dev/input/by-id/' )
 
    }
 

@@ -20,12 +20,12 @@ void updateThreadJoysticks(LuaScript& lScript)
       usleep(1000);
       for(unsigned int i=0; i<GLOBAL::joyList.size(); i++)
         {
-	  if(GLOBAL::joyList[i]->readJoy(&event))
+    if(GLOBAL::joyList[i]->readJoy(&event))
             {
-	      mtx.lock();
-	      if(event.isButton()) lScript.call_device_function("d" + std::to_string(i) + "_b" + std::to_string(event.number) + "_event", event.value);
-	      else if(event.isAxis()) lScript.call_device_function("d" + std::to_string(i) + "_a" + std::to_string(event.number) + "_event", event.value);
-	      mtx.unlock();
+        mtx.lock();
+        if(event.isButton()) lScript.call_device_function("d" + std::to_string(i) + "_b" + std::to_string(event.number) + "_event", event.value);
+        else if(event.isAxis()) lScript.call_device_function("d" + std::to_string(i) + "_a" + std::to_string(event.number) + "_event", event.value);
+        mtx.unlock();
             }//if
 
         }//for
@@ -41,15 +41,15 @@ void updateThreadKeyboard(LuaScript& lScript)
     {
       usleep(1000);
       for(unsigned int i=0; i<GLOBAL::kbdList.size(); i++)
-	{
-	  if(GLOBAL::kbdList[i]->readEvent(&kbdEvent))
+  {
+    if(GLOBAL::kbdList[i]->readEvent(&kbdEvent))
             {
-	      mtx.lock();
-	      if(kbdEvent.isPressed) lScript.call_device_function("kbd" + std::to_string(i) + "_pressed", kbdEvent.code);
-	      else lScript.call_device_function("kbd" + std::to_string(i) + "_released", kbdEvent.code);
-	      mtx.unlock();
+        mtx.lock();
+        if(kbdEvent.isPressed) lScript.call_device_function("kbd" + std::to_string(i) + "_pressed", kbdEvent.code);
+        else lScript.call_device_function("kbd" + std::to_string(i) + "_released", kbdEvent.code);
+        mtx.unlock();
             }//if
-	}//for
+  }//for
     }//while
 }
 
@@ -92,7 +92,7 @@ int l_get_joy_axis_status(lua_State* L)
     }
   int status = GLOBAL::joyList[id]->get_axis_status(type);
   lua_pushnumber(L, status);
-  return 1;	
+  return 1; 
 }
 
 //Called from user via lua script
@@ -121,10 +121,10 @@ int l_send_vjoy_axis_event(lua_State* _L)
   if(id >= GLOBAL::vJoyList.size())
     {
       std::cout << "ERROR send_vjoy_axis_event: Virtual device " << id << " does not exist.\n";
-      return 0;	
+      return 0; 
     }//if
   GLOBAL::vJoyList[id]->send_axis_event(type, value);
-	
+  
   return 0;
 }
 
@@ -163,9 +163,9 @@ int l_get_vjoy_axis_status(lua_State* L)
 
 
 //Populate a list of physical devices defined in user lua file
-bool populate_devices(LuaScript& lScript)
+bool populate_devices(LuaScript& lScript, std::string devicePath)
 {
-  //Get the data from the user lua file	
+  //Get the data from the user lua file 
   std::vector<std::array<int, 2>> dList;
   std::array<int, 2> val;
   int cIndex = 0;
@@ -188,11 +188,11 @@ bool populate_devices(LuaScript& lScript)
     {
       Joystick* cJoy = new Joystick(dList[i][0], dList[i][1], GLOBAL::joyList);
       if(!cJoy->isFound())
-	{
-	  std::cout << "WARNING: Joystick " << std::hex << dList[i][0] << ":" << std::hex << dList[i][1] << " is not found.\n";
-	  delete cJoy;
-	  return false;
-	}
+  {
+    std::cout << "WARNING: Joystick " << std::hex << dList[i][0] << ":" << std::hex << dList[i][1] << " is not found.\n";
+    delete cJoy;
+    return false;
+  }
 
       GLOBAL::joyList.push_back(cJoy);
     }//for
@@ -205,6 +205,10 @@ bool populate_devices(LuaScript& lScript)
       bool noerr;
       std::string kbdEventPath = lScript.get<std::string>("devices.kbd" + std::to_string(cIndex), noerr);
       if(!noerr) break;
+
+      kbdEventPath = devicePath;
+      std::cout << "Device Path " << devicePath << " \n";
+
       CKeyboard* nKBG = new CKeyboard(kbdEventPath);
       GLOBAL::kbdList.push_back(nKBG);
       cIndex++;
@@ -222,14 +226,14 @@ bool populate_virtual_devices(LuaScript& lScript)
   while(1)
     {
       bool noerr;
-		
+    
       val[0] = lScript.get<int>("v_devices.v" + std::to_string(cIndex) + ".buttons", noerr);
       if(!noerr) break;
       val[1] = lScript.get<int>("v_devices.v" + std::to_string(cIndex) + ".axes", noerr);
       if(!noerr) break;
 
       dList.push_back(val);
-		
+    
       cIndex++;
     }//for
 
@@ -279,16 +283,16 @@ int main(int argc, char** argv)
   LuaScript lScript(argv[1]);
   if(!lScript.isOpen()) return 0;
 
-  if (!populate_devices(lScript)) exit(0);
+  if (!populate_devices(lScript, argv[2])) exit(0);
   if (!populate_virtual_devices(lScript)) exit(0);
   link_lua_functions(lScript);
 
 
-  std::cout << "Press 'q' and then 'ENTER' to quit!\n";	
+  std::cout << "Press 'q' and then 'ENTER' to quit!\n"; 
 
   std::thread threadUpdateJoysticks(updateThreadJoysticks, std::ref(lScript));
   std::thread threadUpdateKeyboard(updateThreadKeyboard, std::ref(lScript));
-	
+  
   while(getchar()!='q');
   bPoll = false,
     threadUpdateJoysticks.join();
