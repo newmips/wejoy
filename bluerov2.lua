@@ -46,124 +46,153 @@ function kbd0_pressed(value)
    -- *** Buttons ***
    if value == KEY_TAB then
       send_button_event(0, 1, 1) -- Stabilize
+      print "KEY_TAB "
    end
 
    if value == KEY_SPACE then
       send_button_event(0, 2, 1) -- Position hold
+      print "KEY_SPACE "
    end
 
    if value == KEY_BACKSPACE then
       send_button_event(0, 3, 1) -- Depth hold
+      print "KEY_BACKSPACE "
    end
 
    if value == KEY_ESC then
       send_button_event(0, 4, 1) -- Disarmed
+      print "KEY_ESC "
    end
 
    if value == KEY_LEFTSHIFT then
       send_button_event(0, 5, 1) -- Shift
+      print "KEY_LEFTSHIFT "
    end
 
    if value == KEY_ENTER then
       send_button_event(0, 6, 1) -- Armed
+      print "KEY_ENTER "
    end
 
    if value == KEY_KPENTER then
       send_button_event(0, 6, 1) -- Armed
+      print "KEY_KPENTER "
    end
 
    if value == KEY_HOME then
       send_button_event(0, 7, 1) -- Mount center
+      print "KEY_HOME "
    end
 
    if value == KEY_KPASTERISK then
       send_button_event(0, 8, 1) -- Input hold set
+      print "KEY_KPASTERISK "
    end
 
    if value == KEY_PAGEDOWN then
       send_button_event(0, 9, 1) -- Mount down
+      print "KEY_PAGEDOWN "
    end
 
    if value == KEY_PAGEUP then
       send_button_event(0, 10, 1) -- Mount up
+      print "KEY_PAGEUP "
    end
 
    if value == KEY_KPPLUS then
       send_button_event(0, 11, 1) -- Gain increase
+      print "KEY_KPPLUS "
    end
 
    if value == KEY_KPMINUS then
       send_button_event(0, 12, 1) -- Gain decrease
+      print "KEY_KPMINUS "
    end
 
    if value == KEY_F5 then
       send_button_event(0, 13, 1) -- Lights dimmer
+      print "KEY_F5 "
    end
 
    if value == KEY_F6 then
       send_button_event(0, 14, 1) -- Lights brighter
+      print "KEY_F6 "
    end
 
    -- *** Left stick ***
 
    if value == KEY_D then
       send_axis_event(0, 0, 32767)
+      print "KEY_D "
    end
 
    if value == KEY_Q then
       send_axis_event(0, 0, -32767)
+      print "KEY_Q "
    end
 
    if value == KEY_S then
       send_axis_event(0, 1, 32767)
+      print "KEY_S "
    end
 
    if value == KEY_Z then
       send_axis_event(0, 1, -32767)
+      print "KEY_Z "
    end
 
    -- *** Right stick ***
 
    if value == KEY_6 then
       send_axis_event(0, 2, 32767)
+      print "KEY_6 "
    end
 
    if value == KEY_4 then
       send_axis_event(0, 2, -32767)
+      print "KEY_4 "
    end
 
    if value == KEY_2 then
       send_axis_event(0, 3, 32767)
+      print "KEY_2 "
    end
 
    if value == KEY_5 then
       send_axis_event(0, 3, 32767)
+      print "KEY_5 "
    end
 
    if value == KEY_8 then
       send_axis_event(0, 3, -32767)
+      print "KEY_8 "
    end
 
    -- *** Right stick alternative ***
 
    if value == KEY_KP6 then
       send_axis_event(0, 2, 32767)
+      print "KEY_KP6 "
    end
 
    if value == KEY_KP4 then
       send_axis_event(0, 2, -32767)
+      print "KEY_KP4 "
    end
 
    if value == KEY_KP2 then
       send_axis_event(0, 3, 32767)
+      print "KEY_KP2 "
    end
 
    if value == KEY_KP5 then
       send_axis_event(0, 3, 32767)
+      print "KEY_KP5 "
    end
 
    if value == KEY_KP8 then
       send_axis_event(0, 3, -32767)
+      print "KEY_KP8 "
    end
 
 end
