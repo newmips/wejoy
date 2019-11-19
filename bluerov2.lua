@@ -110,7 +110,7 @@ function kbd0_pressed(value)
       send_axis_event(0, 0, 32767)
    end
 
-   if value == KEY_A then
+   if value == KEY_Q then
       send_axis_event(0, 0, -32767)
    end
 
@@ -118,7 +118,7 @@ function kbd0_pressed(value)
       send_axis_event(0, 1, 32767)
    end
 
-   if value == KEY_W then
+   if value == KEY_Z then
       send_axis_event(0, 1, -32767)
    end
 
