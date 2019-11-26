@@ -63,16 +63,15 @@ Make sure you have configured program to run with th keyboard of your laptop / P
 1. Retrieve keyboard device ID with command:
 > xinput
 
-2. Change value if needed in "bluerov2.lua" file
-...
-kbd0 = "/dev/input/event3"
-...
+For instance : standard keyboard write in file "/dev/input/event3"
 
 2. Compile source code to (re)generate "wejoy" binary:
 > sudo sh make.sh
 
 3. Execute command:
-> sudo ./wejoy bluerov2.lua
+> sudo ./wejoy bluerov2.lua /dev/input/event3
+
+Replace "/dev/input/event3" with your uinput device
 
 Your keyboard is now set to emulate a virtual joystick. This one is recognized by QGroundControl (tested on Ubuntu 19.04).
 
